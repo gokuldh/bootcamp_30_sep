@@ -15,23 +15,83 @@ class FlutterBootcamp extends StatelessWidget{
          backgroundColor: Colors.deepOrange,
          centerTitle: true,
        ),
-       body: Container(
-         color: Colors.grey,
-         child: Text("SKILLTO"),
-         padding: EdgeInsets.fromLTRB(30, 15, 30, 15),
-         margin: EdgeInsets.fromLTRB(100, 100, 0, 0),
-       ),
-       floatingActionButton: FloatingActionButton(
-         child: Icon(
-           Icons.alternate_email,
-           size: 30,
-           color: Colors.white,
+       body: Column(
+         children: [
+           Row(
+             children: [
+               Expanded(
+                 flex: 1,
+                 child: Container(
+                   padding: EdgeInsets.all(20),
+                   color: Colors.deepOrange,
+                   child: Text("A"),
+                 ),
+               ),
+               Expanded(
+                 flex: 2,
+                 child: Container(
+                   padding: EdgeInsets.all(20),
+                   color: Colors.blue,
+                   child: Text("B"),
+                 ),
+               ),
+               Expanded(
+                 flex: 1,
+                 child: Container(
+                   padding: EdgeInsets.all(20),
+                   color: Colors.green,
+                   child: Text("C"),
+                 ),
+               ),
+             ],
+           ),
+
+         SizedBox(
+           height: 20,
          ),
-         backgroundColor: Colors.deepOrange,
-         onPressed: () {
-           print("I was Clicked");
-         },
-       ) ,
+
+           Row(
+             children: [
+               Expanded(
+                 flex: 1,
+                 child: Container(
+                   padding: EdgeInsets.all(20),
+                   color: Colors.deepOrange,
+                   child: Text("A"),
+                 ),
+               ),
+               Expanded(
+                 flex: 2,
+                 child: Container(
+                   padding: EdgeInsets.all(20),
+                   color: Colors.blue,
+                   child: Text("B"),
+                 ),
+               ),
+               Expanded(
+                 flex: 1,
+                 child: Container(
+                   padding: EdgeInsets.all(20),
+                   color: Colors.green,
+                   child: Text("C"),
+                 ),
+               ),
+             ],
+           ),
+           SizedBox(
+             height: 20,
+           ),
+           Row(
+             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+             children: [
+                 CircleAvatar(
+                   backgroundImage: AssetImage('assets/phone.jpg'),
+                   radius: 50,
+                 ),
+             ],
+           ),
+         ],
+       ),
      ),
    );
   }
