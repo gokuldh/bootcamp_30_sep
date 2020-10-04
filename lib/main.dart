@@ -1,99 +1,54 @@
 import 'package:flutter/material.dart';
-import 'strings.dart';
 
-void main() => runApp(FlutterBootcamp());
+void main() => runApp(MaterialApp(
+  home: FlutterBootcamp()
+));
+
+class FlutterBootcamp extends StatefulWidget{
+
+  @override
+  _FlutterBootcamp createState() => _FlutterBootcamp();
+
+}
+
+class _FlutterBootcamp extends State<FlutterBootcamp> {
+
+  List<String> notes = [
+    "Take out your car",
+    "get groceries from market",
+    "Finish the project by tonight!!",
+    "This is a Bootcamp",
+    "This is Day 5"
+  ];
+
+  Widget cardTemplate(note) {
+    return Card (
+      margin: EdgeInsets.all(5),
+      child: Padding(
+        padding: EdgeInsets.all(15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+          Text(note),
+        ],
+        ),
+      ),
+    );
+  }
 
 
-class FlutterBootcamp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-
-   return MaterialApp(
-     home: Scaffold(
-       appBar: AppBar(
-         title: Text(Strings.titletext),
-         backgroundColor: Colors.deepOrange,
-         centerTitle: true,
-       ),
-       body: Column(
-         children: [
-           Row(
-             children: [
-               Expanded(
-                 flex: 1,
-                 child: Container(
-                   padding: EdgeInsets.all(20),
-                   color: Colors.deepOrange,
-                   child: Text("A"),
-                 ),
-               ),
-               Expanded(
-                 flex: 2,
-                 child: Container(
-                   padding: EdgeInsets.all(20),
-                   color: Colors.blue,
-                   child: Text("B"),
-                 ),
-               ),
-               Expanded(
-                 flex: 1,
-                 child: Container(
-                   padding: EdgeInsets.all(20),
-                   color: Colors.green,
-                   child: Text("C"),
-                 ),
-               ),
-             ],
-           ),
-
-         SizedBox(
-           height: 20,
-         ),
-
-           Row(
-             children: [
-               Expanded(
-                 flex: 1,
-                 child: Container(
-                   padding: EdgeInsets.all(20),
-                   color: Colors.deepOrange,
-                   child: Text("A"),
-                 ),
-               ),
-               Expanded(
-                 flex: 2,
-                 child: Container(
-                   padding: EdgeInsets.all(20),
-                   color: Colors.blue,
-                   child: Text("B"),
-                 ),
-               ),
-               Expanded(
-                 flex: 1,
-                 child: Container(
-                   padding: EdgeInsets.all(20),
-                   color: Colors.green,
-                   child: Text("C"),
-                 ),
-               ),
-             ],
-           ),
-           SizedBox(
-             height: 20,
-           ),
-           Row(
-             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-             children: [
-                 CircleAvatar(
-                   backgroundImage: AssetImage('assets/phone.jpg'),
-                   radius: 50,
-                 ),
-             ],
-           ),
-         ],
-       ),
+   return Scaffold(
+     appBar: AppBar(
+       title: Text("Notes App"),
+       centerTitle: true,
+       backgroundColor: Colors.deepOrange,
+     ),
+     body: Column(
+       children: notes.map((note) => cardTemplate(note)).toList(),
      ),
    );
   }
-}
 
+}
