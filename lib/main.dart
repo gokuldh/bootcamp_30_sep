@@ -1,68 +1,127 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
-import 'package:http/http.dart' as http;
-//https://reqres.in/api/users?page=2
+
 
 void main() => runApp(MaterialApp(
- home: ApiTest(),
+ home: QuickTimer(),
 ));
 
-class ApiTest extends StatefulWidget{
+class QuickTimer extends StatefulWidget{
  @override
- _ApiTest createState() => _ApiTest();
+ _QuickTimer createState() => _QuickTimer();
 
 }
 
-class _ApiTest extends State<ApiTest>{
+class _QuickTimer extends State<QuickTimer>{
 
-  Map data;
-  List userData;
+  static const duration = const Duration(seconds: 1);
 
-  Future getData() async{
-  http.Response response = await http.get("https://reqres.in/api/users?page=2");
-  data = json.decode(response.body);
-  setState(() {
-    userData = data["data"];
-  });
+  int secondspassed = 0;
+  bool isActive = false;
+  Timer timer;
 
+  void ticker() {
+    if(isActive){
+      setState(() {
+        secondspassed = secondspassed + 1;
+      });
+
+    }
   }
 
   @override
   void initState(){
+    timer = Timer.periodic(duration, (Timer t) {
+      ticker();
+    });
    super.initState();
-   getData();
   }
-
 
   @override
   Widget build(BuildContext context) {
 
+    int seconds = secondspassed % 60;
+    int minutes = secondspassed ~/ 60;
+    int hours = secondspassed ~/ (60*60);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("Api Test"),
+        title: Text("Quick TImer"),
         backgroundColor: Colors.green,
+        centerTitle: true,
       ),
-      body: ListView.builder(
-          itemCount: userData == null ? 0: userData.length,
-          itemBuilder: (BuildContext context, int index) {
-          return Card(
-            child: Padding(
-              padding: EdgeInsets.all(10),
-              child: Row(
-                children: <Widget>[
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(userData[index]["avatar"]),
-                  ),
-                  Padding(
-                      padding: EdgeInsets.all(10),
-                    child: Text("${userData[index]["first_name"]}, ${userData[index]["last_name"]}"),
-                  )
-                ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                TimerContainer(
+                  label: 'H',
+                  value: hours.toString(),
+                ),
+                TimerContainer(
+                    label: 'M',
+                    value: minutes.toString(),
+                ),
+                TimerContainer(
+                    label: 'S',
+                    value: seconds.toString(),
+                ),
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.all(20),
+              child: RaisedButton(
+                onPressed: () {
+                  setState(() {
+                    isActive = !isActive;
+                  });
+                },
+                child: Text(isActive ? 'Stop': 'Start'),
               ),
             ),
-          );
-          }
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class TimerContainer extends StatelessWidget{
+  TimerContainer({this.label, this.value});
+  String label;
+  String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 5),
+      padding: EdgeInsets.all(30),
+      decoration:  new BoxDecoration(
+        borderRadius: new BorderRadius.circular(10),
+        color: Colors.black54,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text(
+              "$value",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 30
+            ),
+          ),
+      Text(
+        "$label",
+        style: TextStyle(
+            color: Colors.white,
+            fontSize: 30
+            ),
+          ),
+        ],
       ),
     );
   }
